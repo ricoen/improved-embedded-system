@@ -73,4 +73,6 @@ void loop() {
   Serial.print("0x");
   Serial.println((long)&(p_data2), HEX);
   Serial.println("");
+
+  delay(1000);
 }

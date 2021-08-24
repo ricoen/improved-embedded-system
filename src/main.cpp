@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <ArxSmartPtr.h>
 
 /*
 Do not define a structure unless the type has all of the following characteristics:
@@ -10,8 +9,6 @@ Do not define a structure unless the type has all of the following characteristi
 
 Source: https://stackoverflow.com/questions/85553/when-should-i-use-a-struct-instead-of-a-class
 */
-
-using namespace std;
 
 struct sensor1 {
   // data
@@ -25,21 +22,23 @@ struct sensor2 {
   float data;
 };
 
-shared_ptr<sensor1> s1(nullptr);
-shared_ptr<sensor2> s2(nullptr);
+struct sensor1* temp1 = NULL;
+struct sensor2* temp2 = NULL;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  temp1 = (struct sensor1*) malloc(sizeof(struct sensor1));
+  temp2 = (struct sensor2*) malloc(sizeof(struct sensor2));
 
   char name1[16] = "Sensor 1";
-  strcpy(s1->label, name1);
+  strcpy(temp1->label, name1);
   char name2[16] = "Sensor 2";
-  strcpy(s1->label, name2);
+  strcpy(temp2->label, name2);
 }
 
 void plus(float &x) {
-  x += x;
+  x *= 2;
 }
 
 void loop() {
@@ -48,27 +47,30 @@ void loop() {
   int *p_data1;
   float *p_data2;
 
-  s1->data = 5;
-  s2->data = 8.2;
+  temp1->data = 5;
+  temp2->data = 8.2;
 
-  p_data1 = &s1->data;
-  p_data2 = &s2->data;
+  p_data1 = &temp1->data;
+  p_data2 = &temp2->data;
 
-  plus(s2->data);
+  plus(temp2->data);
 
-  Serial.println(s1->label);
-  Serial.println(s1->data);
-  Serial.println(s2->label);
+  Serial.println(temp1->label);
+  Serial.println(temp1->data);
+  Serial.println("");
+  Serial.println(temp2->label);
   Serial.println(*p_data2);
+  Serial.println("");
   Serial.print("0x");
-  Serial.print((long)&(s1->label), HEX);
+  Serial.print((long)&(temp1->label), HEX);
   Serial.print(", ");
   Serial.print("0x");
   Serial.print((long)&(p_data1), HEX);
   Serial.print(", ");
   Serial.print("0x");
-  Serial.print((long)&(s2->label), HEX);
+  Serial.print((long)&(temp2->label), HEX);
   Serial.print(", ");
   Serial.print("0x");
   Serial.println((long)&(p_data2), HEX);
+  Serial.println("");
 }

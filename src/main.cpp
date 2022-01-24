@@ -44,14 +44,8 @@ void plus(float &x) {
 void loop() {
   // put your main code here, to run repeatedly:
   // Serial.println("Struct Program");
-  int *p_data1;
-  float *p_data2;
-
   temp1->data = 5;
   temp2->data = 8.2;
-
-  p_data1 = &temp1->data;
-  p_data2 = &temp2->data;
 
   plus(temp2->data);
 
@@ -59,19 +53,19 @@ void loop() {
   Serial.println(temp1->data);
   Serial.println("");
   Serial.println(temp2->label);
-  Serial.println(*p_data2);
+  Serial.println(temp2->data);
   Serial.println("");
   Serial.print("0x");
   Serial.print((long)&(temp1->label), HEX);
   Serial.print(", ");
   Serial.print("0x");
-  Serial.print((long)&(p_data1), HEX);
+  Serial.print((long)&(temp1->data), HEX);
   Serial.print(", ");
   Serial.print("0x");
   Serial.print((long)&(temp2->label), HEX);
   Serial.print(", ");
   Serial.print("0x");
-  Serial.println((long)&(p_data2), HEX);
+  Serial.println((long)&(temp2->data), HEX);
   Serial.println("");
 
   delay(1000);
